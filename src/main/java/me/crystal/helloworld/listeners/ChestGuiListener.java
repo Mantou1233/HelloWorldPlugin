@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.server.ServiceRegisterEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -78,6 +79,12 @@ public class ChestGuiListener implements Listener {
         // Using slots click is the best option for your inventory click's
         p.sendMessage("You clicked at slot " + e.getRawSlot());
     }
+
+    @EventHandler
+    public void onServiceRegister(final ServiceRegisterEvent e) {
+        Bukkit.getLogger().info(e.getEventName());
+    }
+
 
     // Cancel dragging in our inventory
     @EventHandler

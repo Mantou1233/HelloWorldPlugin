@@ -20,9 +20,6 @@ public class HelloWorldPlugin extends JavaPlugin {
     @Override
     public void onEnable () {
         // Save default config
-        if(!setupVault()){
-            getLogger().info("no vault ;-;");
-        }
         this.saveDefaultConfig();
 
         // Set static instance
