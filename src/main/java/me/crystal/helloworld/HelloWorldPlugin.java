@@ -2,6 +2,7 @@ package me.crystal.helloworld;
 
 import me.crystal.helloworld.commands.BalanceCommand;
 import me.crystal.helloworld.listeners.ChestGuiListener;
+import me.crystal.helloworld.listeners.VaultHandler;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,16 +13,13 @@ import me.crystal.helloworld.tasks.ExampleTask;
 import java.util.Objects;
 
 public class HelloWorldPlugin extends JavaPlugin {
-    private static Economy econ = null;
+    public static Economy econ = null;
 
     public static Economy getEconomy() {
         return econ;
     }
     @Override
     public void onEnable () {
-        if(!setupVault()) {
-            getLogger().info("Vault is not installed!!");
-        }
         // Save default config
         this.saveDefaultConfig();
 
@@ -35,6 +33,7 @@ public class HelloWorldPlugin extends JavaPlugin {
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new ChestGuiListener(), this);
+        this.getServer().getPluginManager().registerEvents(new VaultHandler(), this);
 
         // Register the example task
         final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
