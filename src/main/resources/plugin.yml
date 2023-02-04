@@ -8,3 +8,6 @@ commands:
   example:
     aliases: ["ex"]
     description: "This is an example plugin."
+  balance:
+    aliases: ["bal"]
+    description: "v"

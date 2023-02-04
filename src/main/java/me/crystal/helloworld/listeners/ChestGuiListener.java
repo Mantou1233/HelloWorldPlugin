@@ -1,6 +1,5 @@
 package me.crystal.helloworld.listeners;
 
-import me.crystal.helloworld.HelloWorldPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -27,7 +26,7 @@ public class ChestGuiListener implements Listener {
     public ChestGuiListener() {
         instance = this;
         // Create a new inventory, with no owner (as this isn't a real inventory), a size of nine, called example
-        inv = Bukkit.createInventory(null, 9, "Example");
+        inv = Bukkit.createInventory(null, 9 * 6, "Example");
 
         // Put the items into the inventory
         initializeItems();
@@ -35,6 +34,7 @@ public class ChestGuiListener implements Listener {
 
     // You can call this whenever you want to put the items in
     public void initializeItems() {
+        inv.setItem(0, createGuiItem(Material.BARRIER, ""));
         inv.addItem(createGuiItem(Material.DIAMOND_SWORD, "Example Sword", "§aFirst line of the lore", "§bSecond line of the lore"));
         inv.addItem(createGuiItem(Material.IRON_HELMET, "§bExample Helmet", "§aFirst line of the lore", "§bSecond line of the lore"));
     }
@@ -75,7 +75,7 @@ public class ChestGuiListener implements Listener {
 
         final Player p = (Player) e.getWhoClicked();
 
-        // Using slots click is a best option for your inventory click's
+        // Using slots click is the best option for your inventory click's
         p.sendMessage("You clicked at slot " + e.getRawSlot());
     }
 
