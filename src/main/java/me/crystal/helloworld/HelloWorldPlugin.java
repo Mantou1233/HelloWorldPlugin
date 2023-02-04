@@ -4,7 +4,6 @@ import me.crystal.helloworld.commands.BalanceCommand;
 import me.crystal.helloworld.listeners.ChestGuiListener;
 import me.crystal.helloworld.listeners.VaultHandler;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.crystal.helloworld.commands.ExampleCommand;
 import me.crystal.helloworld.listeners.PlayerJoinListener;
@@ -14,8 +13,7 @@ import java.util.Objects;
 
 public class HelloWorldPlugin extends JavaPlugin {
     public static Economy econ = null;
-
-    public static Economy getEconomy() {
+    public static Economy getEconomy(){
         return econ;
     }
     @Override
@@ -40,14 +38,6 @@ public class HelloWorldPlugin extends JavaPlugin {
         this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
     }
 
-    public boolean setupVault(){
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        econ = rsp.getProvider();
-        return econ != null;
-    }
 
 
     private static HelloWorldPlugin instance;
