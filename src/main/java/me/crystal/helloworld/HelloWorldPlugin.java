@@ -4,6 +4,7 @@ import me.crystal.helloworld.commands.BalanceCommand;
 import me.crystal.helloworld.listeners.ChestGuiListener;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.crystal.helloworld.commands.ExampleCommand;
@@ -12,7 +13,6 @@ import me.crystal.helloworld.tasks.ExampleTask;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class HelloWorldPlugin extends JavaPlugin {
     private static Economy econ = null;
@@ -45,14 +45,13 @@ public class HelloWorldPlugin extends JavaPlugin {
     }
 
     private boolean setupVault(){
-        String[] pluginList = (String[]) Arrays.asList(
+        String[] pluginList = (String[]) Arrays.stream(
                 Bukkit
                         .getServer()
                         .getPluginManager()
                         .getPlugins()
         )
-                .stream()
-                .map(plugin -> plugin.getName())
+                .map(Plugin::getName)
                 .toArray();
 
         getLogger().info(String.join(", ", pluginList));
