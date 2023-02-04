@@ -10,5 +10,5 @@ commands:
     description: "This is an example plugin."
   balance:
     aliases: ["bal"]
-    description: "v"
+    description: "check ur money"
 depend: [Vault]
