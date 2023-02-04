@@ -10,6 +10,8 @@ import me.crystal.helloworld.commands.ExampleCommand;
 import me.crystal.helloworld.listeners.PlayerJoinListener;
 import me.crystal.helloworld.tasks.ExampleTask;
 
+import java.util.Objects;
+
 public class HelloWorldPlugin extends JavaPlugin {
     private static Economy econ = null;
 
@@ -28,8 +30,8 @@ public class HelloWorldPlugin extends JavaPlugin {
         HelloWorldPlugin.instance = this;
 
         // Register the example command
-        this.getCommand("example").setExecutor(new ExampleCommand());
-        this.getCommand("balance").setExecutor(new BalanceCommand());
+        Objects.requireNonNull(this.getCommand("example")).setExecutor(new ExampleCommand());
+        Objects.requireNonNull(this.getCommand("balance")).setExecutor(new BalanceCommand());
         
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -42,7 +44,7 @@ public class HelloWorldPlugin extends JavaPlugin {
 
     private boolean setupVault(){
         getLogger().info("ae!!");
-        if(Bukkit.getServer().getPluginManager().getPlugin("Vault") != null) return false;
+        if(Bukkit.getServer().getPluginManager().getPlugin("Vault") == null) return false;
         RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             getLogger().info("ae");
