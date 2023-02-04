@@ -1,5 +1,6 @@
 package me.crystal.helloworld;
 
+import me.crystal.helloworld.listeners.ChestGuiListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.crystal.helloworld.commands.ExampleCommand;
@@ -21,6 +22,7 @@ public class HelloWorldPlugin extends JavaPlugin {
         
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ChestGuiListener(), this);
 
         // Register the example task
         final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;

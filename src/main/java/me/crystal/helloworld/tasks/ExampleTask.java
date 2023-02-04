@@ -1,12 +1,12 @@
 package me.crystal.helloworld.tasks;
 
-import me.crystal.helloworld.HelloWorldPlugin;
+import me.crystal.helloworld.utils.Translator;
 import org.bukkit.Bukkit;
 
 public class ExampleTask implements Runnable {
     @Override
     public void run() {
-        final String message = HelloWorldPlugin.getInstance().getConfig().getString("messages.from-task");
+        final String message = Translator.get("messages.from-task");
         Bukkit.getServer().broadcastMessage(message);
     }
 }
