@@ -23,7 +23,7 @@ public class BalanceCommand implements CommandExecutor {
         Player player = (Player) sender;
         Essentials ess = HelloWorldPlugin.getEss();
         User user = ess.getUser(player);
-        sender.sendMessage(Translator.tr(String.format("&6You have %.2ffdy coins!!", user.getMoney())));
+        sender.sendMessage(Translator.tr(String.format("&6Balance:&a %.2f &e*ducks*", user.getMoney())));
 
         return true;
     }
