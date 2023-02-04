@@ -20,7 +20,7 @@ public class HelloWorldPlugin extends JavaPlugin {
     @Override
     public void onEnable () {
         if(!setupVault()) {
-            getLogger().info("Vault is not installed??");
+            getLogger().info("Vault is not installed!!");
         }
         // Save default config
         this.saveDefaultConfig();
