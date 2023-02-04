@@ -1,5 +1,8 @@
 package me.crystal.helloworld.listeners;
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
+import me.crystal.helloworld.HelloWorldPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -8,11 +11,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.server.ServiceRegisterEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public class ChestGuiListener implements Listener {
@@ -26,8 +29,7 @@ public class ChestGuiListener implements Listener {
 
     public ChestGuiListener() {
         instance = this;
-        // Create a new inventory, with no owner (as this isn't a real inventory), a size of nine, called example
-        inv = Bukkit.createInventory(null, 9 * 6, "Example");
+        inv = Bukkit.createInventory(null, 9, "Shop");
 
         // Put the items into the inventory
         initializeItems();
@@ -35,9 +37,7 @@ public class ChestGuiListener implements Listener {
 
     // You can call this whenever you want to put the items in
     public void initializeItems() {
-        inv.setItem(0, createGuiItem(Material.BARRIER, ""));
-        inv.addItem(createGuiItem(Material.DIAMOND_SWORD, "Example Sword", "§aFirst line of the lore", "§bSecond line of the lore"));
-        inv.addItem(createGuiItem(Material.IRON_HELMET, "§bExample Helmet", "§aFirst line of the lore", "§bSecond line of the lore"));
+        inv.addItem(createGuiItem(Material.DIAMOND, "hi", "§ahi world", "§apress me to buy me for 12 ducks"));
     }
 
     // Nice little method to create a gui item with a custom name, and description
@@ -74,10 +74,19 @@ public class ChestGuiListener implements Listener {
         // verify current item is not null
         if (clickedItem == null || clickedItem.getType().isAir()) return;
 
-        final Player p = (Player) e.getWhoClicked();
+        Player p = (Player) e.getWhoClicked();
 
         // Using slots click is the best option for your inventory click's
-        p.sendMessage("You clicked at slot " + e.getRawSlot());
+        if(e.getRawSlot() == 0){
+            Essentials ess = HelloWorldPlugin.getEss();
+            User user = ess.getUser(p);
+            if(!user.canAfford(BigDecimal.valueOf(12))) {
+                p.sendMessage("You cant afford this diamond bozo");
+            }
+            p.getInventory().addItem(new ItemStack(Material.DIAMOND, 1));
+            user.takeMoney(BigDecimal.valueOf(12));
+            p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
+        }
     }
 
 

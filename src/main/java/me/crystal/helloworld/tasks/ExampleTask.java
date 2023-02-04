@@ -1,12 +1,13 @@
 package me.crystal.helloworld.tasks;
 
 import me.crystal.helloworld.utils.Translator;
-import org.bukkit.Bukkit;
+
+import java.util.Random;
 
 public class ExampleTask implements Runnable {
+    private static Random random = new Random();
     @Override
     public void run() {
-        final String message = Translator.get("messages.from-task");
-        Bukkit.getServer().broadcastMessage(message);
+
     }
 }

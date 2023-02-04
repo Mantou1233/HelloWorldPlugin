@@ -2,5 +2,6 @@ messages:
   from-command: "&eHello world from Command."
   from-listener: "&aHello world from Listener."
   from-task: "&dHello world from Task."
+  balance: "&6Balance:&a %.2f &e*ducks*"
 
 task-repeat-every: 3

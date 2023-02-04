@@ -5,9 +5,9 @@ main: ${mainClass}
 version: ${version}
 url: ${url}
 commands:
-  example:
-    aliases: ["ex"]
-    description: "This is an example plugin."
+  shop:
+    aliases: ["fdyshop"]
+    description: "BUY>>?? what do you expect"
   balance:
     aliases: ["bal"]
     description: "check ur money"

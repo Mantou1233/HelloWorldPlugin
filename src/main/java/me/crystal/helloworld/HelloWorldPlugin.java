@@ -5,7 +5,7 @@ import me.crystal.helloworld.commands.BalanceCommand;
 import me.crystal.helloworld.listeners.ChestGuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import me.crystal.helloworld.commands.ExampleCommand;
+import me.crystal.helloworld.commands.ShopCommand;
 import me.crystal.helloworld.listeners.PlayerJoinListener;
 import me.crystal.helloworld.tasks.ExampleTask;
 
@@ -28,7 +28,7 @@ public class HelloWorldPlugin extends JavaPlugin {
         HelloWorldPlugin.instance = this;
 
         // Register the example command
-        Objects.requireNonNull(this.getCommand("example")).setExecutor(new ExampleCommand());
+        Objects.requireNonNull(this.getCommand("shop")).setExecutor(new ShopCommand());
         Objects.requireNonNull(this.getCommand("balance")).setExecutor(new BalanceCommand());
         
         // Register the example listener
