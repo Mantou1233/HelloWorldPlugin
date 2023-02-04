@@ -80,11 +80,6 @@ public class ChestGuiListener implements Listener {
         p.sendMessage("You clicked at slot " + e.getRawSlot());
     }
 
-    @EventHandler
-    public void onServiceRegister(final ServiceRegisterEvent e) {
-        Bukkit.getLogger().info(e.getEventName());
-    }
-
 
     // Cancel dragging in our inventory
     @EventHandler

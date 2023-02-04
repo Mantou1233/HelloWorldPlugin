@@ -19,6 +19,9 @@ public class HelloWorldPlugin extends JavaPlugin {
     }
     @Override
     public void onEnable () {
+        if(!setupVault()) {
+            getLogger().info("Vault is not installed??");
+        }
         // Save default config
         this.saveDefaultConfig();
 
@@ -39,9 +42,6 @@ public class HelloWorldPlugin extends JavaPlugin {
     }
 
     private boolean setupVault(){
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
