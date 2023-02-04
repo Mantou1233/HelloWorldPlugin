@@ -11,4 +11,4 @@ commands:
   balance:
     aliases: ["bal"]
     description: "check ur money"
-depend: [EssentialsX]
+depend: [Essentials]
