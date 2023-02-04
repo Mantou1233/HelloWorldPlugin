@@ -3,15 +3,12 @@ package me.crystal.helloworld;
 import me.crystal.helloworld.commands.BalanceCommand;
 import me.crystal.helloworld.listeners.ChestGuiListener;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.crystal.helloworld.commands.ExampleCommand;
 import me.crystal.helloworld.listeners.PlayerJoinListener;
 import me.crystal.helloworld.tasks.ExampleTask;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class HelloWorldPlugin extends JavaPlugin {
@@ -45,26 +42,14 @@ public class HelloWorldPlugin extends JavaPlugin {
     }
 
     private boolean setupVault(){
-        String[] pluginList = (String[]) Arrays.stream(
-                Bukkit
-                        .getServer()
-                        .getPluginManager()
-                        .getPlugins()
-        )
-                .map(Plugin::getName)
-                .toArray();
-
-        getLogger().info(String.join(", ", pluginList));
-
-        getLogger().info("ae!!");
-        if(Bukkit.getServer().getPluginManager().getPlugin("Vault") == null) return false;
-        RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
-            getLogger().info("ae");
             return false;
         }
         econ = rsp.getProvider();
-        getLogger().info("ae??");
         return econ != null;
     }
 
