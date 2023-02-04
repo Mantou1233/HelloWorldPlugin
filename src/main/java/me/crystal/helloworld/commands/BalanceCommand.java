@@ -1,10 +1,10 @@
 package me.crystal.helloworld.commands;
 
-import me.crystal.helloworld.HelloWorldPlugin;
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
-import org.bukkit.Bukkit;
+import com.earth2me.essentials.User;
+import com.earth2me.essentials.api.Economy;
+import com.earth2me.essentials.api.NoLoanPermittedException;
+import com.earth2me.essentials.api.UserDoesNotExistException;
+import net.ess3.api.MaxMoneyException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,19 +18,21 @@ public class BalanceCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        Bukkit.getServer().broadcastMessage(Bukkit.getServer().getServicesManager().getKnownServices().toString());
-        Bukkit.getServer().broadcastMessage(Bukkit.getServer().getServicesManager().getRegistration(Chat.class).toString());
-        Economy econ = HelloWorldPlugin.getEconomy();
-        if(econ == null) {
-            sender.sendMessage("vault not found...");
-            return false;
+
+        try {
+            sender.sendMessage(String.format("You have %s", Economy.getMoney(player.getName())));
+        } catch (UserDoesNotExistException e) {
+            throw new RuntimeException(e);
         }
-        sender.sendMessage(String.format("You have %s", econ.format(econ.getBalance(player.getName()))));
-        EconomyResponse r = econ.depositPlayer(player, 1.05);
-        if(r.transactionSuccess()) {
-            sender.sendMessage(String.format("You were given %s and now have %s", econ.format(r.amount), econ.format(r.balance)));
-        } else {
-            sender.sendMessage(String.format("An error occured: %s", r.errorMessage));
+        try {
+            Economy.add(player.getName(), 10.0);
+        } catch (NoLoanPermittedException | MaxMoneyException | UserDoesNotExistException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            sender.sendMessage(String.format("You were given %s and now have %s", Economy.format(10.0), Economy.getMoney(player.getName())));
+        } catch (UserDoesNotExistException e) {
+            throw new RuntimeException(e);
         }
         return true;
     }
