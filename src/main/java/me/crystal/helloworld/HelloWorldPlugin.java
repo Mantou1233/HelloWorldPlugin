@@ -10,7 +10,9 @@ import me.crystal.helloworld.commands.ExampleCommand;
 import me.crystal.helloworld.listeners.PlayerJoinListener;
 import me.crystal.helloworld.tasks.ExampleTask;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class HelloWorldPlugin extends JavaPlugin {
     private static Economy econ = null;
@@ -43,6 +45,18 @@ public class HelloWorldPlugin extends JavaPlugin {
     }
 
     private boolean setupVault(){
+        String[] pluginList = (String[]) Arrays.asList(
+                Bukkit
+                        .getServer()
+                        .getPluginManager()
+                        .getPlugins()
+        )
+                .stream()
+                .map(plugin -> plugin.getName())
+                .toArray();
+
+        getLogger().info(String.join(", ", pluginList));
+
         getLogger().info("ae!!");
         if(Bukkit.getServer().getPluginManager().getPlugin("Vault") == null) return false;
         RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
