@@ -11,4 +11,4 @@ commands:
   balance:
     aliases: ["bal"]
     description: "v"
-depend: ["Vault"]
+depend: [Vault]
