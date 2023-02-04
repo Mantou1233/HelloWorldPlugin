@@ -2,19 +2,18 @@
     <modelVersion>4.0.0</modelVersion>
     
     <!-- Project information -->
-    <groupId>dev._2lstudios</groupId>
-    <artifactId>ExamplePlugin</artifactId>
+    <groupId>me.crystal</groupId>
+    <artifactId>HelloWorldPlugin</artifactId>
     <packaging>jar</packaging>
 
     <!-- Plugin Information -->
-    <name>ExamplePlugin</name>
-    <description>This is just an example plugin</description>
+    <name>HelloWorldPlugin</name>
+    <description>hi</description>
     <version>0.0.1</version>
-    <url>https://github.com/2lstudios-mc/bukkit-boilerplate</url>
 
     <properties>
-        <author>2LStudios</author>
-        <mainClass>dev._2lstudios.example.ExamplePlugin</mainClass>
+        <author>Myself</author>
+        <mainClass>me.crystal.helloworld.HelloWorldPlugin</mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

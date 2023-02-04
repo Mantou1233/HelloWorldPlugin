@@ -1,12 +1,12 @@
-package dev._2lstudios.example;
+package me.crystal.helloworld;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import dev._2lstudios.example.commands.ExampleCommand;
-import dev._2lstudios.example.listeners.PlayerJoinListener;
-import dev._2lstudios.example.tasks.ExampleTask;
+import me.crystal.helloworld.commands.ExampleCommand;
+import me.crystal.helloworld.listeners.PlayerJoinListener;
+import me.crystal.helloworld.tasks.ExampleTask;
 
-public class ExamplePlugin extends JavaPlugin {
+public class HelloWorldPlugin extends JavaPlugin {
     
     @Override
     public void onEnable () {
@@ -14,7 +14,7 @@ public class ExamplePlugin extends JavaPlugin {
         this.saveDefaultConfig();
 
         // Set static instance
-        ExamplePlugin.instance = this;
+        HelloWorldPlugin.instance = this;
 
         // Register the example command
         this.getCommand("example").setExecutor(new ExampleCommand());
@@ -27,9 +27,9 @@ public class ExamplePlugin extends JavaPlugin {
         this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
     }
 
-    private static ExamplePlugin instance;
+    private static HelloWorldPlugin instance;
 
-    public static ExamplePlugin getInstance () {
-        return ExamplePlugin.instance;
+    public static HelloWorldPlugin getInstance () {
+        return HelloWorldPlugin.instance;
     }
 }

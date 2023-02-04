@@ -14,7 +14,6 @@ local.properties
 .factorypath
 
 ## IntelliJ
-out/
 .idea/
 .idea_modules/
 *.iml
@@ -24,7 +23,6 @@ out/
 ## Java
 .mtj.tmp/
 *.class
-*.jar
 *.war
 *.ear
 *.nar
