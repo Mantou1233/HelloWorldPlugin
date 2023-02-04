@@ -1,9 +1,12 @@
 package me.crystal.helloworld.commands;
 
+import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
+import me.crystal.helloworld.HelloWorldPlugin;
+import me.crystal.helloworld.utils.Translator;
 import net.ess3.api.MaxMoneyException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,22 +21,10 @@ public class BalanceCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
+        Essentials ess = HelloWorldPlugin.getEss();
+        User user = ess.getUser(player);
+        sender.sendMessage(Translator.tr(String.format("&6You have %.2ffdy coins!!", user.getMoney())));
 
-        try {
-            sender.sendMessage(String.format("You have %s", Economy.getMoney(player.getName())));
-        } catch (UserDoesNotExistException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            Economy.add(player.getName(), 10.0);
-        } catch (NoLoanPermittedException | MaxMoneyException | UserDoesNotExistException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            sender.sendMessage(String.format("You were given %s and now have %s", Economy.format(10.0), Economy.getMoney(player.getName())));
-        } catch (UserDoesNotExistException e) {
-            throw new RuntimeException(e);
-        }
         return true;
     }
 }
