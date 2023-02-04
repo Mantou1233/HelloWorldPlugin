@@ -17,11 +17,15 @@ public class VaultHandler implements Listener {
     }
 
     public VaultHandler() {
+        Bukkit.getServer().broadcastMessage(Bukkit.getServer().getServicesManager().getKnownServices().toString());
         instance = this;
+
     }
 
     @EventHandler
     public void onServiceRegister(ServiceRegisterEvent event) {
+        Bukkit.getServer().broadcastMessage(Bukkit.getServer().getServicesManager().getKnownServices().toString());
+        Bukkit.getServer().broadcastMessage(event.getProvider().toString());
         if (event.getProvider().getService() == Economy.class) {
             HelloWorldPlugin.econ = Objects.requireNonNull(Bukkit.getServer().getServicesManager().getRegistration(Economy.class)).getProvider();
             HelloWorldPlugin.getInstance().getLogger().info("Successfully hooked into Vault for economy!");
