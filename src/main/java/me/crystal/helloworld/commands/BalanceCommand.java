@@ -1,8 +1,10 @@
 package me.crystal.helloworld.commands;
 
 import me.crystal.helloworld.HelloWorldPlugin;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,6 +18,8 @@ public class BalanceCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
+        Bukkit.getServer().broadcastMessage(Bukkit.getServer().getServicesManager().getKnownServices().toString());
+        Bukkit.getServer().broadcastMessage(Bukkit.getServer().getServicesManager().getRegistration(Chat.class).toString());
         Economy econ = HelloWorldPlugin.getEconomy();
         if(econ == null) {
             sender.sendMessage("vault not found...");
