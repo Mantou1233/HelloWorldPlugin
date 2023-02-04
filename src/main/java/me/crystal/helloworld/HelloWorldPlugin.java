@@ -41,7 +41,7 @@ public class HelloWorldPlugin extends JavaPlugin {
         this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
     }
 
-    private boolean setupVault(){
+    public boolean setupVault(){
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;

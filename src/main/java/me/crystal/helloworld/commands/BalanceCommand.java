@@ -15,6 +15,7 @@ public class BalanceCommand implements CommandExecutor {
             sender.sendMessage("console cannot use!");
             return false;
         }
+        HelloWorldPlugin.getInstance().setupVault();
         Player player = (Player) sender;
         Economy econ = HelloWorldPlugin.getEconomy();
         if(econ == null) {
