@@ -25,12 +25,12 @@ public class TestCommand implements TabExecutor {
         }
         Player player = (Player) sender;
 
-        HelloWorldPlugin.getInstance().getConfig().set("itemstack-test", player.getInventory().getItemInMainHand());
+        HelloWorldPlugin.getInstance().getConfig().set("class-test", new InventoryEntry());
         HelloWorldPlugin.getInstance().saveConfig();
 
-        ItemStack item = HelloWorldPlugin.getInstance().getConfig().getItemStack("itemstack-test");
-        if(item == null) return false;
-        player.getInventory().addItem(item);
+        InventoryEntry cls = (InventoryEntry) HelloWorldPlugin.getInstance().getConfig().get("class-test");
+        sender.sendMessage(cls.toString());;
+        sender.sendMessage(cls.asdf);
         sender.sendMessage("OK");
         return true;
     }
@@ -41,4 +41,12 @@ public class TestCommand implements TabExecutor {
         argList.add("write");
         return argList;
     }
+}
+
+class InventoryEntry {
+    public String asdf = "ae";
+    public InventoryEntry(){
+
+    }
+
 }
