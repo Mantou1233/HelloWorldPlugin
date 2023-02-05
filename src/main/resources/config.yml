@@ -5,3 +5,7 @@ messages:
   balance: "&6Balance:&a %.2f &e*ducks*"
 
 task-repeat-every: 3
+
+shop:
+  size: 9
+  items:

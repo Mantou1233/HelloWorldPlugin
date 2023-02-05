@@ -2,19 +2,17 @@ package me.crystal.helloworld.commands;
 
 import me.crystal.helloworld.HelloWorldPlugin;
 import me.crystal.helloworld.listeners.ChestGuiListener;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class TestCommand implements TabExecutor {
@@ -25,11 +23,14 @@ public class TestCommand implements TabExecutor {
             return false;
         }
         Player player = (Player) sender;
-
-        HashMap hm = new HashMap();
-        hm.put("ae", "QAQ");
-        HelloWorldPlugin.getInstance().getConfig().set("hashmap-test", hm);
+        ConfigurationSection config = HelloWorldPlugin.getInstance().getConfig();
+        ConfigurationSection shop = config.createSection("shop");
+        shop.set("size", 9);
+        ConfigurationSection items = shop.createSection("items");
+        items.set("0", new ItemEntry(new ItemStack(Material.DIAMOND), BigDecimal.valueOf(69), BigDecimal.valueOf(69)));
+        
         HelloWorldPlugin.getInstance().saveConfig();
+        ChestGuiListener.getInstance().initializeInv();
         return true;
     }
     @Override
@@ -41,10 +42,3 @@ public class TestCommand implements TabExecutor {
     }
 }
 
-class InventoryEntry {
-    public String asdf = "ae";
-    public InventoryEntry(){
-
-    }
-
-}

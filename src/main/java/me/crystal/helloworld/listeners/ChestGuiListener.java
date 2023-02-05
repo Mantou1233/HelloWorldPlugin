@@ -3,8 +3,9 @@ package me.crystal.helloworld.listeners;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.crystal.helloworld.HelloWorldPlugin;
+import me.crystal.helloworld.commands.ItemEntry;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,12 +16,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.List;
 
 public class ChestGuiListener implements Listener {
-    private final Inventory inv;
+    private Inventory inv;
 
+    private static ConfigurationSection shop;
     private static ChestGuiListener instance;
 
     public static ChestGuiListener getInstance () {
@@ -28,33 +29,35 @@ public class ChestGuiListener implements Listener {
     }
 
     public ChestGuiListener() {
+        ConfigurationSection config = HelloWorldPlugin.getInstance().getConfig();
+        shop = config.createSection("shop");
         instance = this;
-        inv = Bukkit.createInventory(null, 9, "Shop");
 
         // Put the items into the inventory
-        initializeItems();
+        initializeInv();
     }
 
     // You can call this whenever you want to put the items in
-    public void initializeItems() {
-        inv.addItem(createGuiItem(Material.DIAMOND, "hi", "§ahi world", "§apress me to buy me for 12 ducks"));
-    }
+    public void initializeInv() {
+        inv = Bukkit.createInventory(null, (int) shop.get("size", 9), "Shop");
+        ConfigurationSection items = shop.createSection("items");
+        for(String key : items.getKeys(false)){
+            ItemEntry itemEntry = (ItemEntry) items.get(key);
+            ItemStack item = itemEntry.item;
+            ItemMeta meta = item.getItemMeta();
+            assert meta != null;
+            List<String> lores = meta.getLore();
+            lores.add(String.format("Buy: %i, Sell: %i", itemEntry.buy, itemEntry.sell));
+            meta.setLore(lores);
 
-    // Nice little method to create a gui item with a custom name, and description
-    protected ItemStack createGuiItem(final Material material, final String name, final String... lore) {
-        final ItemStack item = new ItemStack(material, 1);
-        final ItemMeta meta = item.getItemMeta();
-
-        // Set the name of the item
-        assert meta != null;
-        meta.setDisplayName(name);
-
-        // Set the lore of the item
-        meta.setLore(Arrays.asList(lore));
-
-        item.setItemMeta(meta);
-
-        return item;
+            int slot;
+            try{
+                slot = Integer.parseInt(key);
+            } catch(NumberFormatException e) {
+                slot = 0;
+            }
+            inv.setItem(slot, item);
+        };
     }
 
     // You can open the inventory with this
@@ -76,17 +79,18 @@ public class ChestGuiListener implements Listener {
 
         Player p = (Player) e.getWhoClicked();
 
-        // Using slots click is the best option for your inventory click's
-        if(e.getRawSlot() == 0){
-            Essentials ess = HelloWorldPlugin.getEss();
-            User user = ess.getUser(p);
-            if(!user.canAfford(BigDecimal.valueOf(12))) {
-                p.sendMessage("You cant afford this diamond bozo");
-            }
-            p.getInventory().addItem(new ItemStack(Material.DIAMOND, 1));
-            user.takeMoney(BigDecimal.valueOf(12));
-            p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
+        ConfigurationSection items = shop.createSection("items");
+        ItemEntry itemEntry = (ItemEntry) items.get(String.format("%s", e.getRawSlot()));
+        if(itemEntry == null) return;
+        Essentials ess = HelloWorldPlugin.getEss();
+        User user = ess.getUser(p);
+        if(!user.canAfford(itemEntry.buy)) {
+            p.sendMessage("You cant afford this diamond bozo");
+            return;
         }
+        p.getInventory().addItem(itemEntry.item);
+        user.takeMoney(itemEntry.buy);
+        p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
     }
 
 
