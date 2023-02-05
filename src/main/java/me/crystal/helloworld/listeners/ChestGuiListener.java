@@ -43,7 +43,7 @@ public class ChestGuiListener implements Listener {
         ConfigurationSection items = shop.createSection("items");
         Bukkit.getServer().broadcastMessage("Reloaded!!");
 
-        for(String key : items.getKeys(false)){
+        for(String key : (String[]) items.getKeys(false).toArray()){
             Bukkit.getServer().broadcastMessage(key);
             ItemEntry itemEntry = (ItemEntry) items.get(key);
             ItemStack item = itemEntry.item;
