@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class TestCommand implements TabExecutor {
         Player player = (Player) sender;
 
         HelloWorldPlugin.getInstance().getConfig().set("itemstack-test", player.getInventory().getItemInMainHand());
+        HelloWorldPlugin.getInstance().saveConfig();
 
         ItemStack item = HelloWorldPlugin.getInstance().getConfig().getItemStack("itemstack-test");
         if(item == null) return false;
