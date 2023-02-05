@@ -2,6 +2,7 @@ package me.crystal.helloworld.commands;
 
 import me.crystal.helloworld.HelloWorldPlugin;
 import me.crystal.helloworld.listeners.ChestGuiListener;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,6 +23,7 @@ public class TestCommand implements TabExecutor {
             return false;
         }
         Player player = (Player) sender;
+        Bukkit.broadcastMessage(args.toString());
         if(args[0] == "write"){
             sender.sendMessage("OK");
             HelloWorldPlugin.getInstance().getConfig().set("itemstack-test", player.getInventory().getItemInMainHand());
