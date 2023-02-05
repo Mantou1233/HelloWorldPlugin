@@ -43,21 +43,21 @@ public class ChestGuiListener implements Listener {
         ConfigurationSection items = shop.getConfigurationSection("items");
         for(String key : items.getKeys(false).toArray(new String[0])){
             Bukkit.getServer().broadcastMessage(key);
-            ItemEntry itemEntry = (ItemEntry) items.get(key);
-            ItemStack item = itemEntry.item;
-            ItemMeta meta = item.getItemMeta();
-            assert meta != null;
-            List<String> lores = meta.getLore();
-            lores.add(String.format("Buy: %i, Sell: %i", itemEntry.buy, itemEntry.sell));
-            meta.setLore(lores);
-
-            int slot;
-            try{
-                slot = Integer.parseInt(key);
-            } catch(NumberFormatException e) {
-                slot = 0;
-            }
-            inv.setItem(slot, item);
+//            ItemEntry itemEntry = (ItemEntry) items.get(key);
+//            ItemStack item = itemEntry.item;
+//            ItemMeta meta = item.getItemMeta();
+//            assert meta != null;
+//            List<String> lores = meta.getLore();
+//            lores.add(String.format("Buy: %i, Sell: %i", itemEntry.buy, itemEntry.sell));
+//            meta.setLore(lores);
+//
+//            int slot;
+//            try{
+//                slot = Integer.parseInt(key);
+//            } catch(NumberFormatException e) {
+//                slot = 0;
+//            }
+//            inv.setItem(slot, item);
         };
     }
 
