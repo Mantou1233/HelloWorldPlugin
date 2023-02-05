@@ -9,3 +9,10 @@ task-repeat-every: 3
 shop:
   size: 9
   items:
+    '0': !!me.crystal.helloworld.commands.ItemEntry
+      buy: !!float '69'
+      item:
+        ==: org.bukkit.inventory.ItemStack
+        v: 3218
+        type: LEGACY_DIAMOND
+      sell: !!float '69'
