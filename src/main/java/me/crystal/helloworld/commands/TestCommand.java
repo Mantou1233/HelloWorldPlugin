@@ -31,6 +31,7 @@ public class TestCommand implements TabExecutor {
         
         HelloWorldPlugin.getInstance().saveConfig();
         ChestGuiListener.getInstance().initializeInv();
+        sender.sendMessage("Reloaded!!");
         return true;
     }
     @Override
