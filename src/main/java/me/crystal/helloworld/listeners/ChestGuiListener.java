@@ -6,6 +6,7 @@ import me.crystal.helloworld.HelloWorldPlugin;
 import me.crystal.helloworld.commands.ItemEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,9 +42,9 @@ public class ChestGuiListener implements Listener {
     public void initializeInv() {
         inv = Bukkit.createInventory(null, (int) shop.get("size", 9), "Shop");
         ConfigurationSection items = shop.getConfigurationSection("items");
-        Bukkit.getServer().broadcastMessage(String.format("%s", items.getObject("0", ItemEntry.class).buy));
         for(String key : items.getKeys(false).toArray(new String[0])){
-            Bukkit.getServer().broadcastMessage(key);
+            MemorySection ii = (MemorySection) items.get(key);
+            Bukkit.getServer().broadcastMessage(String.join(",", ii.getKeys(false).toArray(new String[0])));
 //            ItemEntry itemEntry = (ItemEntry) items.get(key);
 //            ItemStack item = itemEntry.item;
 //            ItemMeta meta = item.getItemMeta();
