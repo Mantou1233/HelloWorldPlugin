@@ -23,7 +23,7 @@ public class TestCommand implements TabExecutor {
             return false;
         }
         Player player = (Player) sender;
-        Bukkit.broadcastMessage(args.toString());
+        Bukkit.broadcastMessage(String.join(", ", args));
         if(args[0] == "write"){
             sender.sendMessage("OK");
             HelloWorldPlugin.getInstance().getConfig().set("itemstack-test", player.getInventory().getItemInMainHand());
