@@ -30,7 +30,7 @@ public class ChestGuiListener implements Listener {
 
     public ChestGuiListener() {
         ConfigurationSection config = HelloWorldPlugin.getInstance().getConfig();
-        shop = config.createSection("shop");
+        shop = config.getConfigurationSection("shop");
         instance = this;
 
         // Put the items into the inventory
@@ -40,11 +40,7 @@ public class ChestGuiListener implements Listener {
     // You can call this whenever you want to put the items in
     public void initializeInv() {
         inv = Bukkit.createInventory(null, (int) shop.get("size", 9), "Shop");
-        ConfigurationSection items = shop.createSection("items");
-        Bukkit.getServer().broadcastMessage("Reloaded!!");
-        Bukkit.getServer().broadcastMessage(String.join(", ", items.getKeys(false).toArray(new String[0])));
-        Bukkit.getServer().broadcastMessage(String.join(", ", shop.getKeys(false).toArray(new String[0])));
-
+        ConfigurationSection items = shop.getConfigurationSection("items");
         for(String key : items.getKeys(false).toArray(new String[0])){
             ItemEntry itemEntry = (ItemEntry) items.get(key);
             ItemStack item = itemEntry.item;
