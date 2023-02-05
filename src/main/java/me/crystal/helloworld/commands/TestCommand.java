@@ -23,17 +23,13 @@ public class TestCommand implements TabExecutor {
             return false;
         }
         Player player = (Player) sender;
-        Bukkit.broadcastMessage(String.join(", ", args));
-        if(args[0] == "write"){
-            sender.sendMessage("OK");
-            HelloWorldPlugin.getInstance().getConfig().set("itemstack-test", player.getInventory().getItemInMainHand());
-        }
-        else if(args[0] == "read"){
-            ItemStack item = HelloWorldPlugin.getInstance().getConfig().getItemStack("itemstack-test");
-            if(item == null) return false;
-            sender.sendMessage("OK");
-            player.getInventory().addItem(item);
-        }
+
+        HelloWorldPlugin.getInstance().getConfig().set("itemstack-test", player.getInventory().getItemInMainHand());
+
+        ItemStack item = HelloWorldPlugin.getInstance().getConfig().getItemStack("itemstack-test");
+        if(item == null) return false;
+        player.getInventory().addItem(item);
+        sender.sendMessage("OK");
         return true;
     }
     @Override
