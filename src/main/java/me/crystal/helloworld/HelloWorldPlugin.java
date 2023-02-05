@@ -2,6 +2,7 @@ package me.crystal.helloworld;
 
 import com.earth2me.essentials.Essentials;
 import me.crystal.helloworld.commands.BalanceCommand;
+import me.crystal.helloworld.commands.TestCommand;
 import me.crystal.helloworld.listeners.ChestGuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,6 +31,9 @@ public class HelloWorldPlugin extends JavaPlugin {
         // Register the example command
         Objects.requireNonNull(this.getCommand("shop")).setExecutor(new ShopCommand());
         Objects.requireNonNull(this.getCommand("balance")).setExecutor(new BalanceCommand());
+        TestCommand testCommandInstance = new TestCommand();
+        Objects.requireNonNull(this.getCommand("test")).setExecutor(testCommandInstance);
+        Objects.requireNonNull(this.getCommand("test")).setTabCompleter(testCommandInstance);
         
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);

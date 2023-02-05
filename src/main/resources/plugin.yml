@@ -11,4 +11,7 @@ commands:
   balance:
     aliases: ["bal"]
     description: "check ur money"
+  test:
+    aliases: ["ts"]
+    description: "test lol"
 depend: [Essentials]
