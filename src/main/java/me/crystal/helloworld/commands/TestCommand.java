@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TestCommand implements TabExecutor {
@@ -25,13 +26,10 @@ public class TestCommand implements TabExecutor {
         }
         Player player = (Player) sender;
 
-        HelloWorldPlugin.getInstance().getConfig().set("class-test", new InventoryEntry());
+        HashMap hm = new HashMap();
+        hm.put("ae", "QAQ");
+        HelloWorldPlugin.getInstance().getConfig().set("hashmap-test", hm);
         HelloWorldPlugin.getInstance().saveConfig();
-
-        InventoryEntry cls = (InventoryEntry) HelloWorldPlugin.getInstance().getConfig().get("class-test");
-        sender.sendMessage(cls.toString());;
-        sender.sendMessage(cls.asdf);
-        sender.sendMessage("OK");
         return true;
     }
     @Override
