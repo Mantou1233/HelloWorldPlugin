@@ -41,6 +41,7 @@ public class ChestGuiListener implements Listener {
     public void initializeInv() {
         inv = Bukkit.createInventory(null, (int) shop.get("size", 9), "Shop");
         ConfigurationSection items = shop.getConfigurationSection("items");
+        Bukkit.getServer().broadcastMessage(String.format("%s", items.getObject("0", ItemEntry.class).buy));
         for(String key : items.getKeys(false).toArray(new String[0])){
             Bukkit.getServer().broadcastMessage(key);
 //            ItemEntry itemEntry = (ItemEntry) items.get(key);
