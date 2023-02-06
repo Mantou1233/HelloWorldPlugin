@@ -17,6 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class ChestGuiListener implements Listener {
             if(lores == null) lores = new ArrayList<>();
             lores.add(String.format("Buy: %s, Sell: %s", buy, sell));
             meta.setLore(lores);
+            item.setItemMeta(meta);
 
             int slot;
             try{
@@ -85,17 +87,21 @@ public class ChestGuiListener implements Listener {
 
         Player p = (Player) e.getWhoClicked();
 
-        ConfigurationSection items = shop.createSection("items");
-        ItemEntry itemEntry = (ItemEntry) items.get(String.format("%s", e.getRawSlot()));
-        if(itemEntry == null) return;
+        ConfigurationSection items = shop.getConfigurationSection("items");
+        MemorySection itemGetter = (MemorySection) items.get(String.format("%s", e.getRawSlot()));
+        if(itemGetter == null) return;
+        int buy = itemGetter.getInt("buy", 0);
+        int sell = itemGetter.getInt("sell", 0);
+        ItemStack item = itemGetter.getItemStack("item");
         Essentials ess = HelloWorldPlugin.getEss();
         User user = ess.getUser(p);
-        if(!user.canAfford(itemEntry.buy)) {
-            p.sendMessage("You cant afford this diamond bozo");
+
+        if(!user.canAfford(BigDecimal.valueOf(buy))) {
+            p.sendMessage("You cant afford this item bozo");
             return;
         }
-        p.getInventory().addItem(itemEntry.item);
-        user.takeMoney(itemEntry.buy);
+        p.getInventory().addItem(item);
+        user.takeMoney(BigDecimal.valueOf(buy));
         p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
     }
 
