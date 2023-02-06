@@ -43,24 +43,23 @@ public class ChestGuiListener implements Listener {
         inv = Bukkit.createInventory(null, (int) shop.get("size", 9), "Shop");
         ConfigurationSection items = shop.getConfigurationSection("items");
         for(String key : items.getKeys(false).toArray(new String[0])){
-            MemorySection ii = (MemorySection) items.get(key);
-            Bukkit.getLogger().info(String.join(",", ii.getKeys(false).toArray(new String[0])));
-            Bukkit.getServer().broadcastMessage(String.join(",", ii.getKeys(false).toArray(new String[0])));
-//            ItemEntry itemEntry = (ItemEntry) items.get(key);
-//            ItemStack item = itemEntry.item;
-//            ItemMeta meta = item.getItemMeta();
-//            assert meta != null;
-//            List<String> lores = meta.getLore();
-//            lores.add(String.format("Buy: %i, Sell: %i", itemEntry.buy, itemEntry.sell));
-//            meta.setLore(lores);
-//
-//            int slot;
-//            try{
-//                slot = Integer.parseInt(key);
-//            } catch(NumberFormatException e) {
-//                slot = 0;
-//            }
-//            inv.setItem(slot, item);
+            MemorySection itemGetter = (MemorySection) items.get(key);
+            int buy = itemGetter.getInt("buy", 0);
+            int sell = itemGetter.getInt("sell", 0);
+            ItemStack item = itemGetter.getItemStack("item");
+            ItemMeta meta = item.getItemMeta();
+            assert meta != null;
+            List<String> lores = meta.getLore();
+            lores.add(String.format("Buy: %i, Sell: %i", buy, sell));
+            meta.setLore(lores);
+
+            int slot;
+            try{
+                slot = Integer.parseInt(key);
+            } catch(NumberFormatException e) {
+                slot = 0;
+            }
+            inv.setItem(slot, item);
         };
     }
 
