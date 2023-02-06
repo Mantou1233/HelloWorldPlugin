@@ -50,7 +50,7 @@ public class ChestGuiListener implements Listener {
             ItemMeta meta = item.getItemMeta();
             assert meta != null;
             List<String> lores = meta.getLore();
-            lores.add(String.format("Buy: %i, Sell: %i", buy, sell));
+            lores.add(String.format("Buy: %s, Sell: %s", buy, sell));
             meta.setLore(lores);
 
             int slot;
