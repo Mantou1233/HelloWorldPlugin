@@ -17,6 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChestGuiListener implements Listener {
@@ -44,12 +45,14 @@ public class ChestGuiListener implements Listener {
         ConfigurationSection items = shop.getConfigurationSection("items");
         for(String key : items.getKeys(false).toArray(new String[0])){
             MemorySection itemGetter = (MemorySection) items.get(key);
+            if(itemGetter == null) continue;
             int buy = itemGetter.getInt("buy", 0);
             int sell = itemGetter.getInt("sell", 0);
             ItemStack item = itemGetter.getItemStack("item");
             ItemMeta meta = item.getItemMeta();
             assert meta != null;
             List<String> lores = meta.getLore();
+            if(lores == null) lores = new ArrayList<>();
             lores.add(String.format("Buy: %s, Sell: %s", buy, sell));
             meta.setLore(lores);
 
