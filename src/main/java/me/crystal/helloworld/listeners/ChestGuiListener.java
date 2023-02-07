@@ -23,7 +23,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import static me.crystal.helloworld.utils.InventoryUtils.consumeItem;
 
 public class ChestGuiListener implements Listener {
     private Inventory inv;
@@ -33,34 +34,6 @@ public class ChestGuiListener implements Listener {
 
     public static ChestGuiListener getInstance () {
         return ChestGuiListener.instance;
-    }
-
-    public boolean consumeItem(Player player, int count, ItemStack is) {
-        Map<Integer, ? extends ItemStack> ammo = player.getInventory().all(is);
-
-        int found = 0;
-        for (ItemStack stack : ammo.values())
-            found += stack.getAmount();
-        if (count > found)
-            return false;
-
-        for (Integer index : ammo.keySet()) {
-            ItemStack stack = ammo.get(index);
-
-            int removed = Math.min(count, stack.getAmount());
-            count -= removed;
-
-            if (stack.getAmount() == removed)
-                player.getInventory().setItem(index, null);
-            else
-                stack.setAmount(stack.getAmount() - removed);
-
-            if (count <= 0)
-                break;
-        }
-
-        player.updateInventory();
-        return true;
     }
 
     public ChestGuiListener() {
@@ -137,11 +110,11 @@ public class ChestGuiListener implements Listener {
 
         } else if (e.getAction().name() == "PICKUP_HALF") {
             Inventory inv = p.getInventory();
-            if(!inv.contains(item)){
-                p.sendMessage(String.format("u hv no item bro"));
+            boolean result = consumeItem(p, 1, item);
+            if(!result) {
+                p.sendMessage(String.format("u have no item bro"));
                 return;
             }
-            consumeItem(p, 1, item);
 
             try{
                 user.giveMoney(BigDecimal.valueOf(sell));
