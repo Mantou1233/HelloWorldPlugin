@@ -81,7 +81,7 @@ public class ChestGuiListener implements Listener {
             if(itemGetter == null) continue;
             int buy = itemGetter.getInt("buy", 0);
             int sell = itemGetter.getInt("sell", 0);
-            ItemStack item = itemGetter.getItemStack("item");
+            ItemStack item = itemGetter.getItemStack("item").clone();
             ItemMeta meta = item.getItemMeta();
             assert meta != null;
             List<String> lores = meta.getLore();
