@@ -9,7 +9,7 @@ task-repeat-every: 3
 shop:
   size: 9
   items:
-    '0': !!me.crystal.helloworld.commands.ItemEntry
+    '0':
       buy: !!float '69'
       item:
         ==: org.bukkit.inventory.ItemStack

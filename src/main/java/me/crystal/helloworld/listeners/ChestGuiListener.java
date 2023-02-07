@@ -4,6 +4,8 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.crystal.helloworld.HelloWorldPlugin;
 import me.crystal.helloworld.commands.ItemEntry;
+import me.crystal.helloworld.utils.Translator;
+import net.ess3.api.MaxMoneyException;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
@@ -21,6 +23,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ChestGuiListener implements Listener {
     private Inventory inv;
@@ -30,6 +33,34 @@ public class ChestGuiListener implements Listener {
 
     public static ChestGuiListener getInstance () {
         return ChestGuiListener.instance;
+    }
+
+    public boolean consumeItem(Player player, int count, ItemStack is) {
+        Map<Integer, ? extends ItemStack> ammo = player.getInventory().all(is);
+
+        int found = 0;
+        for (ItemStack stack : ammo.values())
+            found += stack.getAmount();
+        if (count > found)
+            return false;
+
+        for (Integer index : ammo.keySet()) {
+            ItemStack stack = ammo.get(index);
+
+            int removed = Math.min(count, stack.getAmount());
+            count -= removed;
+
+            if (stack.getAmount() == removed)
+                player.getInventory().setItem(index, null);
+            else
+                stack.setAmount(stack.getAmount() - removed);
+
+            if (count <= 0)
+                break;
+        }
+
+        player.updateInventory();
+        return true;
     }
 
     public ChestGuiListener() {
@@ -55,7 +86,7 @@ public class ChestGuiListener implements Listener {
             assert meta != null;
             List<String> lores = meta.getLore();
             if(lores == null) lores = new ArrayList<>();
-            lores.add(String.format("Buy: %s, Sell: %s", buy, sell));
+            lores.add(String.format(Translator.tr("&bbuy for %s &0-&r &a sell for %s"), buy, sell));
             meta.setLore(lores);
             item.setItemMeta(meta);
 
@@ -77,12 +108,8 @@ public class ChestGuiListener implements Listener {
     // Check for clicks on items
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent e) {
-        e.getWhoClicked().sendMessage(e.getAction().name());
-
         if (!e.getInventory().equals(inv)) return;
-
         e.setCancelled(true);
-
         final ItemStack clickedItem = e.getCurrentItem();
 
         // verify current item is not null
@@ -99,13 +126,30 @@ public class ChestGuiListener implements Listener {
         Essentials ess = HelloWorldPlugin.getEss();
         User user = ess.getUser(p);
 
-        if(!user.canAfford(BigDecimal.valueOf(buy))) {
-            p.sendMessage("You cant afford this item bozo");
-            return;
+        if (e.getAction().name() == "PICKUP_ALL") {
+            if(user.getMoney().compareTo(BigDecimal.valueOf(buy)) == -1) {
+                p.sendMessage(String.format("sorry but u don't have enough money 2 buy it"));
+                return;
+            }
+            p.getInventory().addItem(item);
+            user.takeMoney(BigDecimal.valueOf(buy));
+            p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
+
+        } else if (e.getAction().name() == "PICKUP_HALF") {
+            Inventory inv = p.getInventory();
+            if(!inv.contains(item)){
+                p.sendMessage(String.format("u hv no item bro"));
+                return;
+            }
+            consumeItem(p, 1, item);
+            try{
+                user.giveMoney(BigDecimal.valueOf(sell));
+            } catch (MaxMoneyException err){
+                p.sendMessage("uh, you have too much money...");
+            }
+            p.sendMessage("done!!");
         }
-        p.getInventory().addItem(item);
-        user.takeMoney(BigDecimal.valueOf(buy));
-        p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
+
     }
 
 
