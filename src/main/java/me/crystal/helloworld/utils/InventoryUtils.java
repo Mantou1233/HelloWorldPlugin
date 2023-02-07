@@ -40,4 +40,18 @@ public class InventoryUtils {
         player.updateInventory();
         return true;
     }
+
+    public static boolean hasItem(Player player, ItemStack is) {
+        Map<Integer, ? extends ItemStack> ammo = player
+                .getInventory()
+                .all(is.getType())
+                .entrySet()
+                .stream()
+                .filter(map -> is.isSimilar(map.getValue()))
+                .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+
+        boolean found = false;
+        for (ItemStack stack : ammo.values()) found = true;
+        return found;
+    }
 }

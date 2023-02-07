@@ -3,7 +3,6 @@ package me.crystal.helloworld.listeners;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import me.crystal.helloworld.HelloWorldPlugin;
-import me.crystal.helloworld.commands.ItemEntry;
 import me.crystal.helloworld.utils.Translator;
 import net.ess3.api.MaxMoneyException;
 import org.bukkit.Bukkit;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static me.crystal.helloworld.utils.InventoryUtils.consumeItem;
+import static me.crystal.helloworld.utils.InventoryUtils.hasItem;
 
 public class ChestGuiListener implements Listener {
     private Inventory inv;
@@ -83,9 +83,8 @@ public class ChestGuiListener implements Listener {
     public void onInventoryClick(final InventoryClickEvent e) {
         if (!e.getInventory().equals(inv)) return;
         e.setCancelled(true);
-        final ItemStack clickedItem = e.getCurrentItem();
 
-        // verify current item is not null
+        final ItemStack clickedItem = e.getCurrentItem();
         if (clickedItem == null || clickedItem.getType().isAir()) return;
 
         Player p = (Player) e.getWhoClicked();
@@ -95,7 +94,7 @@ public class ChestGuiListener implements Listener {
         if(itemGetter == null) return;
         int buy = itemGetter.getInt("buy", 0);
         int sell = itemGetter.getInt("sell", 0);
-        ItemStack item = itemGetter.getItemStack("item");
+        ItemStack item = itemGetter.getItemStack("item").clone();
         Essentials ess = HelloWorldPlugin.getEss();
         User user = ess.getUser(p);
 
@@ -104,17 +103,17 @@ public class ChestGuiListener implements Listener {
                 p.sendMessage(String.format("sorry but u don't have enough money 2 buy it"));
                 return;
             }
-            p.getInventory().addItem(item);
+            p.getInventory().addItem(item.clone());
             user.takeMoney(BigDecimal.valueOf(buy));
             p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
 
         } else if (e.getAction().name() == "PICKUP_HALF") {
             Inventory inv = p.getInventory();
-            boolean result = consumeItem(p, 1, item);
-            if(!result) {
+            if(!hasItem(p, item)) {
                 p.sendMessage(String.format("u have no item bro"));
                 return;
             }
+            boolean result = consumeItem(p, 1, item);
 
             try{
                 user.giveMoney(BigDecimal.valueOf(sell));
