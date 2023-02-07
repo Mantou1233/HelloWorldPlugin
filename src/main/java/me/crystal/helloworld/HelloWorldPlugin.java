@@ -40,8 +40,7 @@ public class HelloWorldPlugin extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ChestGuiListener(), this);
 
         // Register the example task
-        final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
-        this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
+        this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), 20L, 20L);
     }
     private static HelloWorldPlugin instance;
 

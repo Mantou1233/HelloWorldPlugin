@@ -23,13 +23,6 @@ public class TestCommand implements TabExecutor {
             return false;
         }
         Player player = (Player) sender;
-        ConfigurationSection config = HelloWorldPlugin.getInstance().getConfig();
-        ConfigurationSection shop = config.getConfigurationSection("shop");
-        shop.set("size", 9);
-        ConfigurationSection items = shop.getConfigurationSection("items");
-        items.set("0", new ItemEntry(new ItemStack(Material.DIAMOND), BigDecimal.valueOf(69), BigDecimal.valueOf(69)));
-        
-        HelloWorldPlugin.getInstance().saveConfig();
         ChestGuiListener.getInstance().initializeInv();
         sender.sendMessage("Reloaded!!");
         return true;

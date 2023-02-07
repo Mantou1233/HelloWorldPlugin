@@ -142,6 +142,7 @@ public class ChestGuiListener implements Listener {
                 return;
             }
             consumeItem(p, 1, item);
+
             try{
                 user.giveMoney(BigDecimal.valueOf(sell));
             } catch (MaxMoneyException err){
