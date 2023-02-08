@@ -29,10 +29,21 @@ public class TestCommand implements TabExecutor {
     }
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        List<String> argList = new ArrayList<>();
-        argList.add("read");
-        argList.add("write");
-        return argList;
+        List<String> arguments = new ArrayList<>();
+        if(args.length == 0){
+            arguments.add("add");
+            arguments.add("sus");
+        }
+        if(args.length == 1){
+            switch(args[0]){
+                case "add": {
+                    for(Material mat : Material.values()) {
+                        arguments.add(mat.toString());
+                    }
+                }
+            }
+        }
+        return arguments;
     }
 }
 

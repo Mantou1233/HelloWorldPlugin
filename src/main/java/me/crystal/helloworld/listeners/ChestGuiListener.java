@@ -59,7 +59,7 @@ public class ChestGuiListener implements Listener {
             assert meta != null;
             List<String> lores = meta.getLore();
             if(lores == null) lores = new ArrayList<>();
-            lores.add(String.format(Translator.tr("&bbuy for %s &0-&r &a sell for %s"), buy, sell));
+            lores.add(String.format(Translator.get("shop-item-lore"), buy, sell));
             meta.setLore(lores);
             item.setItemMeta(meta);
 
@@ -100,22 +100,20 @@ public class ChestGuiListener implements Listener {
 
         if (e.getAction().name() == "PICKUP_ALL") {
             if(user.getMoney().compareTo(BigDecimal.valueOf(buy)) == -1) {
-                p.sendMessage(String.format("sorry but u don't have enough money 2 buy it"));
+                p.sendMessage(String.format(Translator.get("shop-buy-cannot-afford")));
                 return;
             }
             p.getInventory().addItem(item.clone());
             user.takeMoney(BigDecimal.valueOf(buy));
-            p.sendMessage(String.format("done! u now have %s ducks left", user.getMoney()));
+            p.sendMessage(String.format(Translator.get("shop-buy-success"), user.getMoney()));
 
         } else if (e.getAction().name() == "PICKUP_HALF") {
-            Inventory inv = p.getInventory();
             if(!hasItem(p, item)) {
                 p.sendMessage(String.format("u have no item bro"));
                 return;
             }
-            boolean result = consumeItem(p, 1, item);
-
-            try{
+            consumeItem(p, 1, item);
+            try {
                 user.giveMoney(BigDecimal.valueOf(sell));
             } catch (MaxMoneyException err){
                 p.sendMessage("uh, you have too much money...");

@@ -7,13 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Translator {
-    private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+    private static final Pattern pattern = Pattern.compile("&#[a-fA-F0-9]{6}");
 
     public static String get(String path, Boolean translate){
         String message = HelloWorldPlugin.getInstance().getConfig().getString(path);
         if(translate) {
             assert message != null;
-            message = ChatColor.translateAlternateColorCodes('&', message);
+            message = Translator.tr(message);
         }
         return message;
     }

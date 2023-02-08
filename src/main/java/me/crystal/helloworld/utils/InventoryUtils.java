@@ -3,6 +3,7 @@ package me.crystal.helloworld.utils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -51,7 +52,12 @@ public class InventoryUtils {
                 .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 
         boolean found = false;
-        for (ItemStack stack : ammo.values()) found = true;
+        for (ItemStack ignored : ammo.values()) found = true;
         return found;
+    }
+
+    public static ItemStack removeTags(ItemStack is, List<String> tags){
+
+        return is;
     }
 }

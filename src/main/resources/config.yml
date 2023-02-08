@@ -3,6 +3,14 @@ messages:
   from-listener: "&aHello world from Listener."
   from-task: "&dHello world from Task."
   balance: "&6Balance:&a %.2f &e*ducks*"
+  shop-item-lore: "&bbuy this for %s and sell for %s"
+  shop-buy-cannot-afford: "you cant afford this item!"
+  shop-buy-success: "done! u now have %s$ left"
+  shop-sell-no-item: "You do not have the required item!"
+  shop-sell-success: "success!"
+
+ignore-nbt:
+  - RepairCost
 
 shop:
   size: 9
