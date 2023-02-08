@@ -39,6 +39,7 @@ public class ExampleTask implements Runnable {
 
             ticks += random.nextInt(2);
             if(ticks > 2000){
+                map.put(key, 0);
                 Player p = Bukkit.getServer().getPlayerExact(key);
                 if(p == null) continue;
                 int money = random.nextInt(500);

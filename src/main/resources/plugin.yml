@@ -14,4 +14,4 @@ commands:
   test:
     aliases: ["ts"]
     description: "test lol"
-depend: [Essentials]
+depend: [Essentials, NBTAPI]
