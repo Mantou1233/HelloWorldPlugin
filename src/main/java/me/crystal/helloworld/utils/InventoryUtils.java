@@ -1,8 +1,11 @@
 package me.crystal.helloworld.utils;
 
+import de.tr7zw.changeme.nbtapi.NBT;
+import me.crystal.helloworld.HelloWorldPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,7 +51,7 @@ public class InventoryUtils {
                 .all(is.getType())
                 .entrySet()
                 .stream()
-                .filter(map -> is.isSimilar(map.getValue()))
+                .filter(map -> removeTags(is.clone()).isSimilar(removeTags(map.getValue().clone())))
                 .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 
         boolean found = false;
@@ -57,7 +60,17 @@ public class InventoryUtils {
     }
 
     public static ItemStack removeTags(ItemStack is, List<String> tags){
-
+        NBT.modify(is, nbt -> {
+            for(String key : nbt.getKeys().toArray(new String[0])){
+                if(tags.contains(key)) nbt.removeKey(key);
+            }
+        });
         return is;
+    }
+
+    public static ItemStack removeTags(ItemStack is){
+        List<String> ls = HelloWorldPlugin.getInstance().getConfig().getStringList("ignore-nbt");
+        if(ls == null) ls = new ArrayList<>();
+        return removeTags(is, ls);
     }
 }
