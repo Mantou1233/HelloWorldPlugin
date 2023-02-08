@@ -59,7 +59,7 @@ public class ChestGuiListener implements Listener {
             assert meta != null;
             List<String> lores = meta.getLore();
             if(lores == null) lores = new ArrayList<>();
-            lores.add(String.format(Translator.get("shop-item-lore"), buy, sell));
+            lores.add(String.format("&bbuy this for %s and sell for %s", buy, sell));
             meta.setLore(lores);
             item.setItemMeta(meta);
 
@@ -100,12 +100,12 @@ public class ChestGuiListener implements Listener {
 
         if (e.getAction().name() == "PICKUP_ALL") {
             if(user.getMoney().compareTo(BigDecimal.valueOf(buy)) == -1) {
-                p.sendMessage(String.format(Translator.get("shop-buy-cannot-afford")));
+                p.sendMessage(String.format("u got no money"));
                 return;
             }
             p.getInventory().addItem(item.clone());
             user.takeMoney(BigDecimal.valueOf(buy));
-            p.sendMessage(String.format(Translator.get("shop-buy-success"), user.getMoney()));
+            p.sendMessage(String.format("success buy u now have %s", user.getMoney()));
 
         } else if (e.getAction().name() == "PICKUP_HALF") {
             if(!hasItem(p, item)) {

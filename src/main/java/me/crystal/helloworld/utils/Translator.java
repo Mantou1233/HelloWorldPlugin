@@ -11,8 +11,7 @@ public class Translator {
 
     public static String get(String path, Boolean translate){
         String message = HelloWorldPlugin.getInstance().getConfig().getString(path);
-        if(translate) {
-            assert message != null;
+        if(translate && message == null) {
             message = Translator.tr(message);
         }
         return message;
