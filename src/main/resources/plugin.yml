@@ -8,9 +8,6 @@ commands:
   shop:
     aliases: ["fdyshop"]
     description: "BUY>>?? what do you expect"
-  balance:
-    aliases: ["bal"]
-    description: "check ur money"
   test:
     aliases: ["ts"]
     description: "test lol"

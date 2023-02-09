@@ -24,6 +24,7 @@ public class BalanceCommand extends AMyCommand {
     @Override
     public void init() {
         tab(0, "a", "b");
+        setDescription("hi");
     }
 
     @Override
