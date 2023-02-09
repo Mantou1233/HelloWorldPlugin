@@ -6,13 +6,28 @@ import me.crystal.helloworld.HelloWorldPlugin;
 import me.crystal.helloworld.listeners.ChestGuiListener;
 import me.crystal.helloworld.utils.Translator;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public class BalanceCommand implements CommandExecutor {
+public class BalanceCommand extends AMyCommand {
+
+    public BalanceCommand(JavaPlugin plugin, String name) {
+        super(plugin, name);
+    }
+
+    public BalanceCommand(String name) {
+        super(HelloWorldPlugin.getInstance(), name);
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void init() {
+        tab(0, "a", "b");
+    }
+
+    @Override
+    public boolean exec(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args){
         if(!(sender instanceof Player)){
             sender.sendMessage("console cannot use!");
             return false;
