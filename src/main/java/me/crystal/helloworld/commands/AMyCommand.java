@@ -65,7 +65,7 @@ public abstract class AMyCommand<T extends JavaPlugin> extends Command implement
 
 
     public void tab(int indice, ArgumentGetter consumer) {
-        tabs.set(indice, consumer);
+        tabs.add(indice, consumer);
     }
 
     public void tab(int indice, String... args) {
