@@ -1,7 +1,7 @@
 package me.crystal.helloworld;
 
 import com.earth2me.essentials.Essentials;
-import me.crystal.helloworld.commands.BalanceCommand;
+import me.crystal.helloworld.commands.cmds.BalanceCommand;
 import me.crystal.helloworld.commands.CommandLoader;
 import me.crystal.helloworld.commands.TestCommand;
 import me.crystal.helloworld.listeners.ChestGuiListener;

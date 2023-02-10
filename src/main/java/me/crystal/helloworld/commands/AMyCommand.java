@@ -1,5 +1,6 @@
 package me.crystal.helloworld.commands;
 
+import me.crystal.helloworld.ifaces.ArgumentGetter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
@@ -8,14 +9,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-interface ArgumentGetter {
-    List<String> op(CommandSender sender, String label, String[] args);
-}
 public abstract class AMyCommand<T extends JavaPlugin> extends Command implements PluginIdentifiableCommand {
 
     private static CommandMap commandMap;
@@ -40,7 +37,7 @@ public abstract class AMyCommand<T extends JavaPlugin> extends Command implement
      * @param plugin plugin responsible of the command.
      * @param name   name of the command.
      */
-    AMyCommand(T plugin, String name) {
+    protected AMyCommand(T plugin, String name) {
         super(name);
 
         assert commandMap != null;
